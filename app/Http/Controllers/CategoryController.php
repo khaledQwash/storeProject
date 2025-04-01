@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\Product;
+use App\Models\Admin\Category;
 
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
-        $categories = DB::table('categories')->get();
+        $categories = DB::table('categories')->paginate(4);
         return view('admin.categories.index', compact('categories'));
     }
     public function create(){
@@ -17,7 +24,9 @@ class CategoryController extends Controller
         return redirect()->back();
     }
     public function destroy($id){
-        $categories = DB::table('categories')->where('id', $id)->delete();
+        // $categories = DB::table('categories')->where('id', $id)->delete();
+        Product::where('category_id', $id)->delete();
+        Category::destroy($id);
         return redirect()->back();
     }
     public function edit($id){

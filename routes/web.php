@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 //dashboard routes
 
-Route::get('admin', function () {
+Route::get('/admin', function () {
     return view('layouts.admin');
-});
+})->middleware('auth');
+
 Route::get('admin/product/create', function () {
     $categories = DB::table('categories')->get();
     return view('admin.products.create', compact('categories'));
@@ -45,4 +46,10 @@ Route::post('admin/category/update', [CategoryController::class, 'update']);
 //front page routes
 
 Route::get('/', [FrontController::class, 'index']);
-Route::post('/', [FrontController::class, 'showFromCategory']);
+Route::get('/', [FrontController::class, 'showFromCategory']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

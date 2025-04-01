@@ -58,13 +58,13 @@
 
         <!-- Three columns of text below the carousel -->
         <div class="py-4">
-            <form action="" method="POST">
+            <form action="" method="GET">
                 @csrf
                 <div class="mb-3" style="display: flex; align-items: center; justify-content: space-between;">
                     <select name="category" id="category" class="form-control" style="width: 94%;">
                         <option value="*"> كل الاصناف *</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->name }}" {{ request('category') == $category->name ? 'selected' : '' }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                         @endforeach
                     </select>
                     <input type="submit" value="عرض" class="btn btn-info" style="width: 5%">
@@ -87,7 +87,7 @@
             @endforeach
 
         </div><!-- /.row -->
-
+        {{$products->links()}}
 
         <!-- START THE FEATURETTES -->
 

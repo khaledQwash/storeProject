@@ -208,7 +208,6 @@
     </main>
     <!-- FOOTER -->
     <footer class="container">
-        <p class="float-end"><a href="#">عد إلى الأعلى</a></p>
         <p>&copy; 2017–2024 Company, Inc. &middot; <a href="#">سياسة الخصوصية</a> &middot; <a
                 href="#">شروط الاستخدام</a></p>
     </footer>

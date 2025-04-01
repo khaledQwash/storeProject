@@ -14,7 +14,7 @@
         <tbody>
             @foreach ($categories as $category)
             <tr>
-                <th scope="row">1</th>
+                <th scope="row">{{$category->id}}</th>
                 <td>{{$category->name}}</td>
                 <td>
                     <form action="{{ url('admin/category/delete/' . $category->id) }}" method="POST" style="display: inline-block">
@@ -30,6 +30,7 @@
             @endforeach
         </tbody>
       </table>
+      {{$categories->links()}}
 </div>
 @endsection
 

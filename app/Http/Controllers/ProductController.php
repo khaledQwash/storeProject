@@ -4,20 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\Product;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
-        $products = DB::table('Products')->get();
+        // $products = DB::table('Products')->get();
+        $products = Product::with('category')->paginate(4);
+        // ->paginate(3);
         return view('admin.products.index', compact('products'));
     }
     public function create(){
-        $product_category = $_POST['category'];
+        $category_id = $_POST['category'];
         $product_name = $_POST['name'];
         $product_price = $_POST['price'];
         $product_quantity = $_POST['quantity'];
         $product_discription = $_POST['discription'];
-        DB::table('Products')->insert(['category'=>$product_category, 'name'=>$product_name, 'price'=>$product_price, 'quantity'=>$product_quantity, 'description'=>$product_discription]);
+        DB::table('Products')->insert(['category_id'=>$category_id, 'name'=>$product_name, 'price'=>$product_price, 'quantity'=>$product_quantity, 'description'=>$product_discription]);
         // $categories = DB::table('categories')->get();
         return redirect()->back();
     }
@@ -32,12 +40,12 @@ class ProductController extends Controller
     }
     public function update(){
         $id = $_POST['id'];
-        $product_category = $_POST['category'];
+        $category_id = $_POST['category'];
         $product_name = $_POST['name'];
         $product_price = $_POST['price'];
         $product_quantity = $_POST['quantity'];
         $product_discription = $_POST['discription'];
-        $product = DB::table('Products')->where('id',$id)->update(['category'=>$product_category, 'name'=>$product_name, 'price'=>$product_price, 'quantity'=>$product_quantity, 'description'=>$product_discription]);
+        $product = DB::table('Products')->where('id',$id)->update(['category_id'=>$category_id, 'name'=>$product_name, 'price'=>$product_price, 'quantity'=>$product_quantity, 'description'=>$product_discription]);
         $products = DB::table('Products')->get();
         // return view('admin.products.index', compact('products'));
         return redirect('admin/product'); // توجيه المستخدم إلى رابط صفحة الجدول
